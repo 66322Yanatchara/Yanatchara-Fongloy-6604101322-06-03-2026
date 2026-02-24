@@ -27,26 +27,44 @@
       </div>
 
       <!-- ===== Student Info Card ===== -->
-      <div class="row q-col-gutter-md q-mb-md">
-        <div class="col-12">
-          <q-card flat bordered class="task-card overflow-hidden">
-            <q-card-section class="row items-center">
-              <q-icon name="person" color="primary" size="md" class="q-mr-md" />
-              <div>
-                <div class="text-h6 text-weight-medium text-primary">
-                  ข้อมูลผู้จัดทำ
-                </div>
-                <div class="text-body2 text-grey-8 q-mt-xs">
-                  นางสาวญาณัจฉรา ฟองลอย
-                </div>
-                <div class="text-caption text-grey-7">
-                  รหัสนักศึกษา: 6604101322
-                </div>
-              </div>
-            </q-card-section>
-          </q-card>
-        </div>
+      <div class="col-12">
+  <q-card flat bordered class="task-card overflow-hidden">
+    <q-card-section>
+      <div class="text-h6 text-weight-medium">
+        ข้อมูลผู้จัดทำ
       </div>
+      <div class="text-body2 text-grey-8 q-mt-xs">
+        นางสาวญาณัจฉรา ฟองลอย
+      </div>
+    </q-card-section>
+
+    <q-separator />
+
+    <q-card-section class="bg-grey-2 q-py-xs row items-center no-wrap">
+      <q-icon
+        name="badge"
+        size="xs"
+        color="grey-7"
+        class="q-mr-xs"
+      />
+      <div class="text-caption text-grey-7">
+        รหัสนักศึกษา: 6604101322
+      </div>
+
+      <q-space />
+
+      <q-chip
+        outline
+        dense
+        size="sm"
+        color="blue-7"
+        text-color="blue-7"
+      >
+        CS
+      </q-chip>
+    </q-card-section>
+  </q-card>
+</div>
 
       <!-- ===== Error Banner ===== -->
       <div v-if="errorMessage" class="q-mb-md">
