@@ -26,45 +26,50 @@
         </div>
       </div>
 
-      <!-- ===== Student Info Card ===== -->
-      <div class="col-12">
-  <q-card flat bordered class="task-card overflow-hidden">
-    <q-card-section>
-      <div class="text-h6 text-weight-medium">
-        ข้อมูลผู้จัดทำ
+      <!-- ===== Student Card ===== -->
+      <div class="col-12 q-mb-md">
+        <q-card flat bordered class="task-card overflow-hidden">
+
+          <q-card-section>
+            <div class="text-h6 text-weight-medium">
+              นางสาวญาณัจฉรา ฟองลอย
+            </div>
+            <div class="text-body2 text-grey-8 q-mt-xs">
+              6604101322
+            </div>
+          </q-card-section>
+
+          <q-separator />
+
+          <q-card-section class="bg-grey-2 q-py-xs row items-center no-wrap">
+
+            <q-icon
+              name="schedule"
+              size="xs"
+              color="grey-7"
+              class="q-mr-xs"
+            />
+
+            <div class="text-caption text-grey-7">
+              {{ currentTime }}
+            </div>
+
+            <q-space />
+
+            <q-chip
+              outline
+              dense
+              size="sm"
+              color="blue-7"
+              text-color="blue-7"
+            >
+              {{ randomId }}
+            </q-chip>
+
+          </q-card-section>
+
+        </q-card>
       </div>
-      <div class="text-body2 text-grey-8 q-mt-xs">
-        นางสาวญาณัจฉรา ฟองลอย
-      </div>
-    </q-card-section>
-
-    <q-separator />
-
-    <q-card-section class="bg-grey-2 q-py-xs row items-center no-wrap">
-      <q-icon
-        name="badge"
-        size="xs"
-        color="grey-7"
-        class="q-mr-xs"
-      />
-      <div class="text-caption text-grey-7">
-        รหัสนักศึกษา: 6604101322
-      </div>
-
-      <q-space />
-
-      <q-chip
-        outline
-        dense
-        size="sm"
-        color="blue-7"
-        text-color="blue-7"
-      >
-        CS
-      </q-chip>
-    </q-card-section>
-  </q-card>
-</div>
 
       <!-- ===== Error Banner ===== -->
       <div v-if="errorMessage" class="q-mb-md">
@@ -143,30 +148,51 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { api } from 'boot/axios';
+import { ref, onMounted, onUnmounted } from 'vue'
+import { api } from 'boot/axios'
 
-const tasks = ref([]);
-const loading = ref(false);
-const errorMessage = ref('');
-const loadingErrorUrl = ref('');
+const tasks = ref([])
+const loading = ref(false)
+const errorMessage = ref('')
+
+/* ===== Student Card Logic ===== */
+
+const currentTime = ref('')
+const randomId = ref('')
+
+const updateTime = () => {
+  currentTime.value = new Date().toLocaleString('th-TH', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit'
+  })
+}
+
+const generateRandomId = () => {
+  return Math.random().toString(16).substring(2, 10)
+}
+
+let timer = null
+
+/* ===== Fetch Tasks ===== */
 
 const fetchTasks = async () => {
-  loading.value = true;
-  errorMessage.value = '';
+  loading.value = true
+  errorMessage.value = ''
 
   try {
-    const res = await api.get('/tasks');
-    tasks.value = res.data.data; // backend ส่ง { data: [...] }
+    const res = await api.get('/tasks')
+    tasks.value = res.data.data
   } catch (err) {
-    console.error('API Error:', err);
-    const status = err.response ? err.response.status : 'Network Error';
-    errorMessage.value = `โหลดงานไม่สำเร็จ (${status})`;
-    loadingErrorUrl.value = api.defaults.baseURL + '/tasks';
+    const status = err.response ? err.response.status : 'Network Error'
+    errorMessage.value = `โหลดงานไม่สำเร็จ (${status})`
   } finally {
-    loading.value = false;
+    loading.value = false
   }
-};
+}
 
 const formatDate = (dateStr) => {
   return new Date(dateStr).toLocaleString('th-TH', {
@@ -175,9 +201,32 @@ const formatDate = (dateStr) => {
     day: 'numeric',
     hour: '2-digit',
     minute: '2-digit',
-    second: '2-digit',
-  });
-};
+    second: '2-digit'
+  })
+}
 
-onMounted(fetchTasks);
+/* ===== Lifecycle ===== */
+
+onMounted(() => {
+  fetchTasks()
+  updateTime()
+  randomId.value = generateRandomId()
+  timer = setInterval(updateTime, 1000) // อัปเดตเวลาทุกวินาที
+})
+
+onUnmounted(() => {
+  clearInterval(timer)
+})
 </script>
+
+<style scoped>
+.task-card {
+  transition: all 0.3s ease;
+  border-radius: 12px;
+}
+.task-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+  border-color: var(--q-primary);
+}
+</style>
