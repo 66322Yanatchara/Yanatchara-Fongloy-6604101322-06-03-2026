@@ -6,13 +6,21 @@
           <div class="text-h3 text-weight-bold text-primary">My Tasks</div>
           <div class="text-subtitle1 text-grey-7">Fullstack Lab: Express + Prisma + Supabase</div>
         </div>
-
-          <div class="text-caption text-grey-6 q-mt-sm">
-            จัดทำโดย: <span class="text-weight-medium text-primary">
-              นางสาวญาณัจฉรา ฟองลอย 6604101322
-            </span>
-          </div>
-
+      <div class="col-12">
+        <q-card flat bordered class="task-card overflow-hidden">
+          <q-card-section>
+            <div class="text-h6 text-weight-medium text-primary">
+              ข้อมูลผู้จัดทำ
+            </div>
+            <div class="text-body2 text-grey-8 q-mt-sm">
+              นางสาวญาณัจฉรา ฟองลอย
+            </div>
+            <div class="text-caption text-grey-7">
+              รหัสนักศึกษา: 6604101322
+            </div>
+          </q-card-section>
+        </q-card>
+      </div>
         <div class="col-auto">
           <q-btn
             round
