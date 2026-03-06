@@ -1,0 +1,11 @@
+{
+  "student_id": "6604101322",
+  "name": "Yanatchara Fongloy",
+  "github_repo": "https://github.com/66322Yanatchara/Yanatchara-Fongloy-6604101322-06-03-2026.git",
+  "backend_base_url": "https://yanatchara-fongloy-6604101322-06-03-2026.onrender.com",
+  "frontend_url": "https://ch411.netlify.app",
+  "api": {
+    "health": "https://yanatchara-fongloy-6604101322-06-03-2026.onrender.com/api/health",
+    "tasks": "https://yanatchara-fongloy-6604101322-06-03-2026.onrender.com/api/tasks"
+  }
+}
